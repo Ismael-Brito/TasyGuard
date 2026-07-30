@@ -42,8 +42,59 @@ internal static class ConfigurationManager
 
     public static void Initialize()
     {
+        // If no config exists, create a sensible default in the app folder
+        try
+        {
+            if (!File.Exists(ConfigPath))
+            {
+                var defaultConfig = new GuardConfiguration
+                {
+                    Applications = new List<ApplicationConfiguration>
+                    {
+                        new ApplicationConfiguration { Name = "TasyNative.exe", MaxInstances = 1 }
+                    },
+                    Update = new UpdateConfiguration
+                    {
+                        Enabled = false,
+                        VersionFilePath = Path.Combine(AppContext.BaseDirectory, "versao.txt")
+                    }
+                };
+
+                var opts = new JsonSerializerOptions { WriteIndented = true };
+                File.WriteAllText(ConfigPath, JsonSerializer.Serialize(defaultConfig, opts));
+                Logger.Write($"Arquivo de configuração criado: {ConfigPath}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Write($"Falha ao criar config padrão: {ex}");
+        }
+
         Load();
         StartWatcher();
+
+        // Ensure a local version manifest exists if configured to point inside app folder
+        try
+        {
+            var upd = current?.Update;
+            if (upd != null && !string.IsNullOrWhiteSpace(upd.VersionFilePath))
+            {
+                string vpath = upd.VersionFilePath;
+                if (!Path.IsPathRooted(vpath))
+                    vpath = Path.Combine(AppContext.BaseDirectory, vpath);
+
+                if (!File.Exists(vpath))
+                {
+                    string template = "{\n  \"version\": \"1.0.0\",\n  \"url\": \"\",\n  \"force\": false,\n  \"message\": \"Versão local\"\n}";
+                    File.WriteAllText(vpath, template);
+                    Logger.Write($"Arquivo de versão criado: {vpath}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Write($"Falha ao garantir arquivo de versão: {ex}");
+        }
     }
 
     public static GuardConfiguration Load()

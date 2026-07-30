@@ -1,0 +1,12 @@
+{
+    "Applications": [
+        {
+            "Name": "TasyNative.exe",
+            "MaxInstances": 1
+        }
+    ],
+    "Update": {
+        "Enabled": true,
+        "VersionFilePath": "\\\\SERVIDOR\\SOFTWARE\\TasyGuard\\versao.txt"
+  }
+}

@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <OutputType>WinExe</OutputType>
+
+    <TargetFramework>net8.0-windows</TargetFramework>
+
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <Nullable>enable</Nullable>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <PublishSingleFile>true</PublishSingleFile>
+
+    <SelfContained>true</SelfContained>
+
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+    <PublishTrimmed>false</PublishTrimmed>
+
+    <AssemblyName>TasyGuard</AssemblyName>
+
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <ApplicationIcon>Resources\icone.ico</ApplicationIcon>
+
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+
+    <FileVersion>1.0.1.0</FileVersion>
+
+    <Version>1.0.1</Version>
+
+    <InformationalVersion>1.0.1</InformationalVersion>
+
+    <Company>Hospital HCSR</Company>
+
+    <Product>TasyGuard</Product>
+
+    <Authors>Ismael Brito</Authors>
+
+    <Copyright>© 2026 HCSR</Copyright>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="System.Management" Version="9.0.0"/>
+
+  </ItemGroup>
+
+</Project>
